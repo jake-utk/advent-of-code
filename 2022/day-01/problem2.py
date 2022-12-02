@@ -5,19 +5,20 @@
 def main():
 
     current_total = 0
-    highest_total = 0
+    totals = []
 
-    with open("2022/01/problem-1-input.txt", "r") as f:
+    with open("2022/day-01/input.txt", "r") as f:
         for line in f:
             line = line.rstrip()
             if line == "":
-                if current_total > highest_total:
-                    highest_total = current_total
+                totals.append(current_total)
                 current_total = 0
             else:
                 current_total += int(line)
+
+    sorted_counts = sorted(totals)
     
-    return highest_total
+    return sum(sorted_counts[-3:])
 
 
 if __name__ == "__main__":
