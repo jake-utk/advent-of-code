@@ -1,5 +1,5 @@
 # Advent of Code 2022
-# Day 1 - Problem 1
+# Day 1 - Problem 2 
 
 
 def main():
