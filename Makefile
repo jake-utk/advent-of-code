@@ -3,7 +3,7 @@ LIBDIR=$(HOME)/dev/advent-of-code/libs
 OUTDIR=$(HOME)/dev/advent-of-code/builds
 CC=gcc
 CFLAGS=-std=c11 -pedantic -I$(LIBDIR)
-WARNINGS=-Wall 
+WARNINGS=-Wall
 DEPS = $(LIBDIR)/read_file.h $(LIBDIRDIR)/strlib.h
 OBJ = $(LIBDIR)/read_file.o $(SRCDIR)/problem1.o
 
