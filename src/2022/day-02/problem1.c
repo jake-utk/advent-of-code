@@ -1,80 +1,35 @@
 // Advent of Code 2022
 // Day 2 - Problem 1
+//
+// Notes:
+// There were 9 possible move combinations with point values from 1-9, so the
+// array indexes are used with the points offset to determine move scores.
+// Linear search was used to find matches against the moves array.
+//
 #include <stdio.h>
 #include <stdlib.h>
-/*#include <string.h>*/
+#include <string.h>
 #include "read_file.h"
-
-typedef struct {
-    char choice; // r, p, s
-    int points; // 0-6
-} Move;
-
 
 int main(int argc, char **argv)
 {
     File *file = read_file(argc > 1 ? fopen(argv[1], "r") : stdin);
-    int total_score = 0, // sum of scores for all rounds
-        round_score = 0; // (1 rock, 2 paper, 3 scissors) + (0 loss, 3 draw,
-                         // 6 win)
-    char elf_move, player_move; // left and right char from each line
+    const int POINTS_INDEX_OFFSET = 1,
+              POSSIBLE_MOVES = 9;
+    const char* moves[] = { "B X", "C Y", "A Z", "A X", "B Y", "C Z", "C X",
+                            "A Y", "B Z" };
+    int total_score = 0;
 
-
-    // for each line,
-    // determine each players move
     for (size_t i = 0; i < file->used; i++) {
-        printf("%s\n", file->lines[i]);
-        
+        for (size_t j = 0; j < POSSIBLE_MOVES; j++) {
+            if (strcmp(file->lines[i], moves[j]) == 0) {
+                total_score += j + POINTS_INDEX_OFFSET;
+                break;
+            }
+        }
     }
 
-
-    /*// Data Structures*/
-    /*// moves = {*/
-    /*// "a": "rock",*/
-    /*// "x": "rock",*/
-    /*// "b": "paper",*/
-    /*// "y": "paper",*/
-    /*// "c": "scissors",*/
-    /*// "z": "scissors"*/
-    /*// }*/
-    /*// points = {*/
-    /*// "rock": 1,*/
-    /*// "paper": 2,*/
-    /*// "scissors": 3,*/
-    /*// "win": 6,*/
-    /*// "draw": 3,*/
-    /*// "loss": 0*/
-    /*// }*/
-
-    /*// Game Logic*/
-    /*// if moves[elf] == moves[player]*/
-    /*//   draw*/
-    /*//   single_round_score += points[draw]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-rock, player-paper*/
-    /*//   player win*/
-    /*//   single_round_score += points[win]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-rock, player-scissors*/
-    /*//   player loss*/
-    /*//   single_round_score += points[loss]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-paper, player-rock*/
-    /*//   player loss*/
-    /*//   single_round_score += points[loss]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-paper, player-scissors*/
-    /*//   player win*/
-    /*//   single_round_score += points[win]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-scissors, player-paper*/
-    /*//   player loss*/
-    /*//   single_round_score += points[loss]*/
-    /*//   single_round_score += points[moves[player]]*/
-    /*// else if elf-scissors, player-rock*/
-    /*//   player win*/
-    /*//   single_round_score += points[win]*/
-    /*//   single_round_score += points[moves[player]]*/
+    printf("Total score %d\n", total_score);
 
     close_file(file);
     exit(EXIT_SUCCESS);
