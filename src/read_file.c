@@ -3,29 +3,39 @@
 #include <string.h>
 #include "read_file.h"
 
-File *create_file(FILE *file_name) {
-    File *file = (File *) malloc(sizeof(File));
-    file->stream = file_name;
-    file->lines = NULL;
-    file->num_ptrs = NUM_PTRS;
-    file->used = 0;
-    return file;
-}
-
-File *read_file(FILE *file_name)
-{
+//TODO On allocation, zero out memory (calloc)
+struct File *create_file(FILE *file_name) {
     if (!file_name) {
         perror("file open failed\n");
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
-    char buffer[MAX_CHARS];
-    File *file = create_file(file_name);
+    struct File *file = (struct File *) malloc(sizeof(struct File));
+
+    if (file == NULL) {
+        perror("malloc-file");
+        return NULL;
+    }
+
+    file->stream = file_name;
+    file->num_ptrs = NUM_PTRS;
+    file->used = 0;
 
     if ((file->lines = malloc(file->num_ptrs * sizeof(*(file->lines)))) == NULL) {
         perror("malloc-lines");
-        exit(EXIT_FAILURE);
+        free(file);
+        return NULL;
     }
+
+    return file;
+}
+
+//TODO On allocation, zero out memory (calloc)
+struct File *read_file(FILE *file_name)
+{
+    struct File *file = create_file(file_name);
+    if (file == NULL) return NULL;
+    char buffer[MAX_CHARS];
 
     while (fgets(buffer, MAX_CHARS, file->stream)) {
         size_t len;
@@ -51,7 +61,7 @@ File *read_file(FILE *file_name)
     return file;
 }
 
-void close_file(File *file) {
+void close_file(struct File *file) {
     // Free individual strings
     for (size_t i = 0; i < file->used; i++)
         free(file->lines[i]);

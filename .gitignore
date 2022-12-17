@@ -1,4 +1,5 @@
 *.o*
-*scratch.c
 vgcore.*
 builds
+src/obj
+input

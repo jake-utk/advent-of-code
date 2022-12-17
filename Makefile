@@ -1,14 +1,35 @@
-SRCDIR=$(HOME)/dev/advent-of-code/src/2022/day-02
-LIBDIR=$(HOME)/dev/advent-of-code/libs
-OUTDIR=$(HOME)/dev/advent-of-code/builds
-CC=gcc
-CFLAGS=-std=c11 -pedantic -I$(LIBDIR)
-WARNINGS=-Wall
-DEPS = $(LIBDIR)/read_file.h $(LIBDIRDIR)/strlib.h
-OBJ = $(LIBDIR)/read_file.o $(SRCDIR)/problem1.o
+DAY=03
+NUM=1
+PROBLEM=day$(DAY)problem$(NUM)
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o  $@ $< $(CFLAGS)
+SRCDIR=src
+OBJDIR=$(SRCDIR)/obj
+OUTDIR=build
+INCDIR=include
+
+CC=gcc
+CFLAGS=-std=c11 -pedantic -I$(INCDIR)
+
+WARNINGS=-Wall
+DEBUG=-g
+
+_DEPS = read_file.h strlib.h hash_table.h
+DEPS = $(patsubst %,$(INCDIR)/%,$(_DEPS))
+
+_OBJ = $(PROBLEM).o read_file.o strlib.o hash_table.o 
+OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
+
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 solution: $(OBJ)
 	$(CC) -o $(OUTDIR)/$@ $^ $(CFLAGS)
+
+.PHONY: debug clean
+
+debug: $(OBJ)
+	$(CC) -o $(OUTDIR)/$@ $^ $(CFLAGS) $(DEBUG)
+
+clean:
+	rm -i -f vgcore* $(OBJDIR)/*.o $(OUTDIR)/*

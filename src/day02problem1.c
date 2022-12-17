@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-    File *file = read_file(argc > 1 ? fopen(argv[1], "r") : stdin);
+    struct File *file = read_file(argc > 1 ? fopen(argv[1], "r") : stdin);
     const int POINTS_INDEX_OFFSET = 1,
               POSSIBLE_MOVES = 9;
     const char* moves[] = { "B X", "C Y", "A Z", "A X", "B Y", "C Z", "C X",
