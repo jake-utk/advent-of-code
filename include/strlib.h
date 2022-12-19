@@ -31,3 +31,15 @@ size_t strnlen(const char *str, size_t max);
  *     Integer representation of string's length.
  */
 char *safer_strcpy(char *source, char *dest, int dest_size);
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Duplicate given string.
+ *
+ *
+ * Args:
+ *     source: Pointer to first element of a constant string.
+ * Returns:
+ *     Integer representation of string's length.
+ */
+char *strdup(const char *source);

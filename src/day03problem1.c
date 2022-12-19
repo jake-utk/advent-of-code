@@ -1,35 +1,66 @@
 // Advent of Code 2022
 // Day 3 - Problem 1
 //
+#include "read_file.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "read_file.h"
-#include "hash_table.h"
 
-// Lower and uppercase letters are different elements
-// Each line contains single even set of elements
-// first half of elements are subset 1
-// second half of elements are subset 2
+#define ASCII_UPPERCASE_OFFSET 65
+#define ASCII_LOWERCASE_OFFSET 97
+
 
 int main(int argc, char** argv)
 {
     struct File *file = read_file(argc > 1 ? fopen(argv[1], "r") : stdin);
-    struct HashTable *table = create_hash_table();
+    char *shared = malloc(sizeof(char *) * file->used);
 
-    // hash table
-    // for each char in first half of line, create key in table and a count
-    // for each char in second half of line, check table for existing key
-    
     for (size_t i = 0; i < file->used; i++) {
-        printf("%s\n", file->lines[i]);
-        int len = strcspn(file->lines[i], "\n");
-        printf("Length %d\n", len);
+        printf("%s\n\n", file->lines[i]);
+        int found_upper[26] = {0},
+            found_lower[26] = {0},
+            len = strcspn(file->lines[i], "\n");
 
+        for (size_t c = 0; c < len / 2; c++) {
+            printf("\nchar: %c\n", file->lines[i][c]);
+            if (file->lines[i][c] >= 'a' || file->lines[i][c] <= 'z') {
+                int index = c - ASCII_LOWERCASE_OFFSET;
+                printf("Found %d\n", found_lower[index]);
+                found_lower[index]++;
+            }
+            if (file->lines[i][c] >= 'A' || file->lines[i][c] <= 'Z') {
+                int index = c - ASCII_UPPERCASE_OFFSET;
+                printf("Found %d\n", found_upper[index]);
+                found_upper[index]++;
+            }
+        }
+        // Just printing
+        for (int i = 0; i < 26; i++) {
+            if (found_upper[i])
+                printf("%c: %d\n", i + ASCII_UPPERCASE_OFFSET, found_upper[i]);
+            if (found_lower[i])
+                printf("%c: %d\n", i + ASCII_LOWERCASE_OFFSET, found_lower[i]);
+        }
 
+        for (size_t c = len / 2; c < len; c++) {
+            printf("char: %c\n", file->lines[i][c]);
+            /*if (file->lines[i][c] >= 'a' || file->lines[i][c] <= 'z') {*/
+                /*if (found_lower[c - ASCII_LOWERCASE_OFFSET])*/
+                    /*// found a char*/
+            /*}*/
+            /*if (file->lines[i][c] >= 'A' || file->lines[i][c] <= 'Z') {*/
+                /*[>found_upper[c - ASCII_UPPERCASE_OFFSET]++;<]*/
+            /*}*/
+        }
+        break;
     }
 
-    delete_hash_table(table);
+    // Parse shared characters into priority values
+    // Sum priority values
+    // print priority values
+
     close_file(file);
+    free(shared);
     exit(EXIT_SUCCESS);
 }
