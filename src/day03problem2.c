@@ -1,5 +1,5 @@
 // Advent of Code 2022
-// Day 3 - Problem 1
+// Day 3 - Problem 2
 //
 #include "read_file.h"
 
@@ -11,6 +11,11 @@
 #define ASCII_UPPERCASE_OFFSET 65
 #define ASCII_LOWERCASE_OFFSET 97
 
+// read in each line
+// sort characters; remove duplicates
+// concat three sorted lines together
+// iterate through and count each character
+// return whichever = 3
 
 int main(int argc, char** argv)
 {
