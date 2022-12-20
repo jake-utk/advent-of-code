@@ -1,16 +1,17 @@
+#include "read_file.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "read_file.h"
 
 //TODO On allocation, zero out memory (calloc)
-struct File *create_file(FILE *file_name) {
+static struct File *create_file(FILE *file_name) {
     if (!file_name) {
         perror("file open failed\n");
         return NULL;
     }
 
-    struct File *file = (struct File *) malloc(sizeof(struct File));
+    struct File *file = malloc(sizeof(struct File));
 
     if (file == NULL) {
         perror("malloc-file");
@@ -60,6 +61,7 @@ struct File *read_file(FILE *file_name)
 
     return file;
 }
+
 
 void close_file(struct File *file) {
     // Free individual strings
