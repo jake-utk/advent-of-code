@@ -1,5 +1,5 @@
 DAY=03
-NUM=1
+NUM=2
 PROBLEM=day$(DAY)problem$(NUM)
 
 SRCDIR=src
