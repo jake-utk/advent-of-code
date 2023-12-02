@@ -3,4 +3,4 @@ vgcore.*
 build/*
 src/obj
 input
-input
+*__pycache__*
