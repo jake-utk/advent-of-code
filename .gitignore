@@ -4,3 +4,4 @@ build/*
 src/obj
 input
 *__pycache__*
+*python-version*
