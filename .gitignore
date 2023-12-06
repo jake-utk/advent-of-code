@@ -5,3 +5,5 @@ src/obj
 input
 *__pycache__*
 *python-version*
+*output*
+*test_input*
