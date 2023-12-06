@@ -4,7 +4,7 @@ from typing import Generator
 from dataclasses import dataclass
 
 WINDOW_SIZE = 3
-INPUT_FILEPATH = "test_input"
+INPUT_FILEPATH = "input"
 
 
 @dataclass()
@@ -19,7 +19,7 @@ def get_numbers(line: str) -> list[Number]:
     in_progress_number: str = ""
     in_prog_starting_idx: int = -1
     for i, char in enumerate(line):
-        if char == ".":
+        if not char.isdigit():
             if is_number_in_progress:
                 numbers.append(
                     Number(
@@ -76,10 +76,10 @@ def process_first_or_last_line(lines: list[str], line_to_process: int) -> int:
     if line_to_process:  # last line
         other_line, target_line = lines
         print(other_line)
-        print(target_line, "<-- Processing")
+        print(target_line, "<--")
     else:  # first line
         target_line, other_line = lines
-        print(target_line, "<-- Processing")
+        print(target_line, "<--")
         print(other_line)
     numbers = get_numbers(target_line)
     numbers_total = 0
@@ -112,7 +112,7 @@ def process_first_or_last_line(lines: list[str], line_to_process: int) -> int:
 def process_middle_line(lines: list[str]) -> int:
     previous_line, target_line, next_line = lines
     print(previous_line)
-    print(target_line, "<-- Processing")
+    print(target_line, "<--")
     print(next_line)
     numbers = get_numbers(target_line)
     numbers_total = 0
