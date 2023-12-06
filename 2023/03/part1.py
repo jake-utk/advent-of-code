@@ -75,24 +75,13 @@ def right_bounds(number: Number, line_length: int) -> int:
 def process_first_or_last_line(lines: list[str], line_to_process: int) -> int:
     if line_to_process:  # last line
         other_line, target_line = lines
-        print(other_line)
-        print(target_line, "<--")
     else:  # first line
         target_line, other_line = lines
-        print(target_line, "<--")
-        print(other_line)
     numbers = get_numbers(target_line)
     numbers_total = 0
     for number in numbers:
-        print(number)
         perimeter_starting_idx = left_bounds(number)
         perimeter_end_idx = right_bounds(number, len(number.number_str))
-        if line_to_process:
-            print(other_line[perimeter_starting_idx:perimeter_end_idx])
-            print(target_line[perimeter_starting_idx:perimeter_end_idx])
-        else:
-            print(target_line[perimeter_starting_idx:perimeter_end_idx])
-            print(other_line[perimeter_starting_idx:perimeter_end_idx])
         perimeter_values = [
             c
             for c in "".join(
@@ -103,7 +92,6 @@ def process_first_or_last_line(lines: list[str], line_to_process: int) -> int:
             )
             if not c.isdigit() and c != "."
         ]
-        print(perimeter_values)
         if len(perimeter_values):
             numbers_total += int(number.number_str)
     return numbers_total
@@ -111,24 +99,11 @@ def process_first_or_last_line(lines: list[str], line_to_process: int) -> int:
 
 def process_middle_line(lines: list[str]) -> int:
     previous_line, target_line, next_line = lines
-    print(previous_line)
-    print(target_line, "<--")
-    print(next_line)
     numbers = get_numbers(target_line)
     numbers_total = 0
     for number in numbers:
-        print(number)
         perimeter_starting_idx = left_bounds(number)
         perimeter_end_idx = right_bounds(number, len(number.number_str))
-        print(
-            previous_line[perimeter_starting_idx:perimeter_end_idx],
-        )
-        print(
-            target_line[perimeter_starting_idx:perimeter_end_idx],
-        )
-        print(
-            next_line[perimeter_starting_idx:perimeter_end_idx],
-        )
         perimeter_values = [
             c
             for c in "".join(
@@ -140,7 +115,6 @@ def process_middle_line(lines: list[str]) -> int:
             )
             if not c.isdigit() and c != "."
         ]
-        print(perimeter_values)
         if len(perimeter_values):
             numbers_total += int(number.number_str)
     return numbers_total
@@ -156,10 +130,7 @@ def main() -> int:
         if first_line:
             total += process_first_or_last_line(lines[:2], 0)
             first_line = False
-            print()
-            # break
         total += process_middle_line(lines)
-        print()
     return total
 
 
